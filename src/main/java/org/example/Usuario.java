@@ -1,4 +1,5 @@
 package org.example;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,12 +10,15 @@ public class Usuario {
     private UUID id;
     private String nome;
     private String email;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     private TipoDeUsuario tipoDeUsuario;
     private int idade;
-    private List<Livro> livros;
-
-    public Usuario() {
-    }
+    private final List<Livro> livros  = new ArrayList<>();
 
     public Usuario(String nome, String email, TipoDeUsuario tipoDeUsuario, int idade) {
         this.id = UUID.randomUUID();
@@ -22,7 +26,7 @@ public class Usuario {
         this.email = email;
         this.tipoDeUsuario = tipoDeUsuario;
         this.idade = idade;
-        this.livros = new ArrayList<>();
+
     }
 
     public UUID getId() {
@@ -66,11 +70,8 @@ public class Usuario {
     }
 
     public List<Livro> getLivros() {
-        return livros;
-    }
 
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
+        return List.copyOf(livros);
     }
 
     @Override
@@ -96,4 +97,12 @@ public class Usuario {
                 ", livros=" + livros +
                 '}';
     }
+
+   public void emprestarLivro(Livro livro){
+        livros.add(livro);
+   }
+
+   public void devolverLivro(Livro livro){
+        livros.remove(livro);
+   }
 }

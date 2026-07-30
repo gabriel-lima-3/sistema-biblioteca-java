@@ -5,26 +5,30 @@ import java.util.List;
 
 public class Biblioteca {
 
-    List<Livro> livro = new ArrayList<>();
-    List<Usuario> usuario = new ArrayList<>();
-    List<Emprestimo> emprestimo = new ArrayList<>();
+   private final List<Livro> livros = new ArrayList<>();
+   private final List<Usuario> usuarios = new ArrayList<>();
+   private final List<Emprestimo> emprestimos = new ArrayList<>();
 
     public Biblioteca() {
     }
 
-    public void cadastrarLivro(Livro livro){
-        this.livro.add(livro);
-
+    public List<Livro> getLivros() {
+        return List.copyOf(livros);
     }
+
+    public List<Usuario> getUsuarios() {
+        return List.copyOf(usuarios);
+    }
+
     public void listarLivros(){
 
          int contador =0;
-        if(livro.isEmpty()) {
+        if(livros.isEmpty()) {
             System.out.println("A biblioteca esta vazia");
             return;
         }
 
-        for (Livro l : livro) {
+        for (Livro l : livros) {
 
             System.out.println(contador + " - " +l);
             contador++;
@@ -32,19 +36,24 @@ public class Biblioteca {
         }
     }
 
+    public void cadastrarLivro(Livro livro){
+        this.livros.add(livro);
+
+    }
+
     public void cadastrarUsuario(Usuario usuario){
-        this.usuario.add(usuario);
+        this.usuarios.add(usuario);
     }
 
     public void listarUsuarios(){
 
-        if(usuario.isEmpty()){
+        if(usuarios.isEmpty()){
             System.out.println("Nao ha usuarios cadastrados");
             return;
 
         }
 
-        for (Usuario u : usuario){
+        for (Usuario u : usuarios){
             System.out.println(u);
         }
     }
@@ -60,9 +69,9 @@ public class Biblioteca {
             LocalDateTime agora = LocalDateTime.now();
             //Horario que precisa entregar o livro
             LocalDateTime dataEntrega = LocalDateTime.now().plusDays(7);
-            usuario.getLivros().add(livro);
+            usuario.emprestarLivro(livro);
             Emprestimo emprestimo1 = new Emprestimo(livro, usuario, agora, dataEntrega);
-            this.emprestimo.add(emprestimo1);
+            this.emprestimos.add(emprestimo1);
             System.out.println("Livro:" + livro.getAutor() + " foi alugado para:" + usuario.getNome());
         }else{
             System.out.println("livro indisponivel");

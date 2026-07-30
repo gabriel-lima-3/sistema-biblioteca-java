@@ -8,6 +8,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int escolha;
 
+
         do {
             System.out.println("===Menu====");
             System.out.println("1-Cadastrar livro");
@@ -61,7 +62,7 @@ public class Main {
                     b1.listarUsuarios();
                     int escolhaDeUsuario = sc.nextInt();
                     sc.nextLine();
-                    b1.fazerEmprestimo(b1.livro.get(escolhaDeLivro), b1.usuario.get(escolhaDeUsuario));
+                    b1.fazerEmprestimo(b1.getLivros().get(escolhaDeLivro), b1.getUsuarios().get(escolhaDeUsuario));
                     break;
                 case 4:
                     b1.listarUsuarios();
