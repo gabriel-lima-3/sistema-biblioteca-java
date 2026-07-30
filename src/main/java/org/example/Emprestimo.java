@@ -2,9 +2,11 @@ package org.example;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Emprestimo {
 
+    private final UUID id = UUID.randomUUID();
     private Livro livro;
     private Usuario usuario;
     private Status status;
@@ -17,6 +19,15 @@ public class Emprestimo {
         this.usuario = usuario;
         this.horario = horario;
         this.dataDevolucao = dataDevolucao;
+
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public Livro getLivro() {
@@ -51,16 +62,17 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Emprestimo that = (Emprestimo) o;
-        return Objects.equals(livro, that.livro) && Objects.equals(usuario, that.usuario) && status == that.status && Objects.equals(horario, that.horario) && Objects.equals(dataDevolucao, that.dataDevolucao);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(livro, usuario, status, horario, dataDevolucao);
+        return Objects.hashCode(id);
     }
 }
 

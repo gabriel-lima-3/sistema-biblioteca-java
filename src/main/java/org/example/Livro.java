@@ -1,17 +1,15 @@
 package org.example;
-
-import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Livro {
 
+    private final UUID id = UUID.randomUUID();
     private String titulo;
     private int ano;
     private String autor;
     private Genero genero;
     private Status status;
-
-
 
     public Livro(String titulo, int ano, String autor, Genero genero) {
         this.titulo = titulo;
@@ -19,6 +17,10 @@ public class Livro {
         this.autor = autor;
         this.genero = genero;
         this.status = Status.DISPONIVEL;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getTitulo() {
@@ -65,12 +67,12 @@ public class Livro {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Livro livro = (Livro) o;
-        return ano == livro.ano && Objects.equals(titulo, livro.titulo) && Objects.equals(autor, livro.autor) && genero == livro.genero;
+        return Objects.equals(id, livro.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titulo, ano, autor, genero);
+        return Objects.hashCode(id);
     }
 
     @Override

@@ -1,5 +1,4 @@
 package org.example;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,21 +6,14 @@ import java.util.UUID;
 
 public class Usuario {
 
-    private UUID id;
+    private final  UUID id = UUID.randomUUID();
     private String nome;
     private String email;
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     private TipoDeUsuario tipoDeUsuario;
     private int idade;
     private final List<Livro> livros  = new ArrayList<>();
 
     public Usuario(String nome, String email, TipoDeUsuario tipoDeUsuario, int idade) {
-        this.id = UUID.randomUUID();
         this.nome = nome;
         this.email = email;
         this.tipoDeUsuario = tipoDeUsuario;
@@ -33,16 +25,16 @@ public class Usuario {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public List<Livro> getLivros() {
+        return List.copyOf(livros);
     }
 
-    public String getNome() {
-        return nome;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public String getEmail() {
@@ -61,29 +53,24 @@ public class Usuario {
         this.tipoDeUsuario = tipoDeUsuario;
     }
 
-    public int getIdade() {
-        return idade;
+    public String getNome() {
+        return nome;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
-    public List<Livro> getLivros() {
-
-        return List.copyOf(livros);
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return idade == usuario.idade && Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && tipoDeUsuario == usuario.tipoDeUsuario && Objects.equals(livros, usuario.livros);
+        return Objects.equals(id, usuario.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, tipoDeUsuario, idade, livros);
+        return Objects.hashCode(id);
     }
 
     @Override
@@ -98,7 +85,7 @@ public class Usuario {
                 '}';
     }
 
-   public void emprestarLivro(Livro livro){
+    public void emprestarLivro(Livro livro){
         livros.add(livro);
    }
 
