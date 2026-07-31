@@ -1,4 +1,5 @@
 package org.example;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -55,20 +56,21 @@ public class Main {
                 case 3:
 
                     System.out.println("Livros disponiveis");
-                    b1.listarLivros();
+                    imprimirLivros(b1.getLivros());
                     System.out.println("\n Digite o livro que quer escolher:\n ");
                     int escolhaDeLivro = sc.nextInt();
                     System.out.println("Digite seu nome de usuario \n");
-                    b1.listarUsuarios();
+                    imprimirUsuarios(b1.getUsuarios());
                     int escolhaDeUsuario = sc.nextInt();
                     sc.nextLine();
                     b1.fazerEmprestimo(b1.getLivros().get(escolhaDeLivro), b1.getUsuarios().get(escolhaDeUsuario));
                     break;
                 case 4:
-                    b1.listarUsuarios();
+
+                    imprimirUsuarios(b1.getUsuarios());
                     break;
                 case 5:
-                    b1.listarLivros();
+                    imprimirLivros(b1.getLivros());
                     break;
                 default:
 
@@ -81,5 +83,39 @@ public class Main {
         }
 
     }
+
+
+    public static void imprimirLivros(List<Livro> livros){
+             int contador = 0;
+
+            if (livros.isEmpty()) {
+                System.out.println("Nao ha livros cadastrados");
+                return;
+
+            }
+
+            for (Livro l : livros) {
+                System.out.println(contador + " - " + l);
+                contador++;
+            }
+    }
+
+
+    public static void imprimirUsuarios(List<Usuario> usuarios){
+
+        int contador =0;
+        if (usuarios.isEmpty()) {
+            System.out.println("Nao ha usuarios cadastrados");
+            return;
+
+        }
+
+        for (Usuario u : usuarios) {
+            System.out.println(contador + " - " + u);
+            contador++;
+        }
+    }
+
+
 
 }
