@@ -6,7 +6,6 @@ public enum TipoDeUsuario {
     ESTUDANTE,
     VISITANTE;
 
-
     public static TipoDeUsuario pelaOpcao(int opcao) {
         return switch (opcao) {
             case 1 -> PROFESSOR;

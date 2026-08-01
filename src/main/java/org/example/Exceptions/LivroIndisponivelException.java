@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package org.example.Exceptions;
 
 public class LivroIndisponivelException extends BibliotecaException {
 

@@ -1,4 +1,7 @@
 package org.example;
+import org.example.Exceptions.BibliotecaException;
+
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,10 +10,10 @@ public class Main {
 
         Biblioteca b1 = new Biblioteca();
         Scanner sc = new Scanner(System.in);
-        int escolha;
-
-
+        int escolha =0;
         do {
+            try{
+
             System.out.println("===Menu====");
             System.out.println("1-Cadastrar livro");
             System.out.println("2-Cadastrar Usuario");
@@ -31,12 +34,11 @@ public class Main {
                     System.out.println("Autor do livro? ");
                     String autor = sc.nextLine();
                     System.out.println("Gênero:\n1 - TERROR\n2 - COMÉDIA\n3 - ROMANCE\n4 - AVENTURA");
-                    int genero1 = sc.nextInt();
+                    int genero = sc.nextInt();
                     sc.nextLine();
-                    Genero genero = Genero.porOpcao(genero1);
-                    Livro livro = new Livro(titulo, ano, autor, genero);
+                    Genero generoEnum = Genero.porOpcao(genero);
+                    Livro livro = new Livro(titulo, ano, autor, generoEnum);
                     b1.cadastrarLivro(livro);
-
                     break;
                 case 2:
                     System.out.println("Nome de usuario? \n");
@@ -44,43 +46,63 @@ public class Main {
                     System.out.println("Email do usuario?");
                     String email = sc.nextLine();
                     System.out.println("Tipo de usuario: \n 1 - PROFESSOR \n 2 - ESTUDANTE \n 3 - VISITANTE");
-                    int tipoDeUsuario = sc.nextInt();
+                    int tipoDeUsuario1 = sc.nextInt();
                     sc.nextLine();
-                    TipoDeUsuario tipoDeUsuario1 = TipoDeUsuario.pelaOpcao(tipoDeUsuario);
+                    TipoDeUsuario tipoDeUsuario = TipoDeUsuario.pelaOpcao(tipoDeUsuario1);
                     System.out.println("Idade?");
                     int idade = sc.nextInt();
                     sc.nextLine();
-                    Usuario usuario = new Usuario(nome, email, tipoDeUsuario1, idade );
+                    Usuario usuario = new Usuario(nome, email, tipoDeUsuario, idade );
                     b1.cadastrarUsuario(usuario);
                     break;
                 case 3:
-
+                    if(b1.getLivros().isEmpty() || b1.getUsuarios().isEmpty()){
+                        System.out.println("Cadastre pelo menos um livro e um usuario");
+                        break;
+                    }
                     System.out.println("Livros disponiveis");
                     imprimirLivros(b1.getLivros());
                     System.out.println("\n Digite o livro que quer escolher:\n ");
                     int escolhaDeLivro = sc.nextInt();
+                    if(escolhaDeLivro<0 || escolhaDeLivro >= b1.getLivros().size()){
+                        System.out.println("Opcao invalida");
+                        break;
+                    }
                     System.out.println("Digite seu nome de usuario \n");
                     imprimirUsuarios(b1.getUsuarios());
                     int escolhaDeUsuario = sc.nextInt();
-                    sc.nextLine();
+                    if (escolhaDeUsuario<0 || escolhaDeUsuario >= b1.getUsuarios().size()){
+                        System.out.println("Opcao invalida");
+                        break;
+                    }
                     b1.fazerEmprestimo(b1.getLivros().get(escolhaDeLivro), b1.getUsuarios().get(escolhaDeUsuario));
                     break;
                 case 4:
-
                     imprimirUsuarios(b1.getUsuarios());
                     break;
                 case 5:
                     imprimirLivros(b1.getLivros());
                     break;
+                case 6:
+                    System.out.println("Saindo...");
+                    break;
                 default:
-
-
+                    System.out.println("Opcao invalida");
             }
-        } while (escolha != 6);
-        {
-            
-            sc.close();
-        }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Digito invalido");
+                sc.nextLine();
+            } catch (BibliotecaException e) {
+                System.out.println(e.getMessage());
+            }
+            catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+
+
+        }while(escolha!=6);
+        sc.close();
 
     }
 
@@ -107,15 +129,10 @@ public class Main {
         if (usuarios.isEmpty()) {
             System.out.println("Nao ha usuarios cadastrados");
             return;
-
         }
-
         for (Usuario u : usuarios) {
             System.out.println(contador + " - " + u);
             contador++;
         }
     }
-
-
-
 }

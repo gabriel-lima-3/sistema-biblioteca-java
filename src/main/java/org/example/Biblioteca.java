@@ -1,5 +1,5 @@
 package org.example;
-import org.example.exceptions.LivroIndisponivelException;
+import org.example.Exceptions.LivroIndisponivelException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,21 +21,15 @@ public class Biblioteca {
         return List.copyOf(usuarios);
     }
 
-
     public void cadastrarLivro(Livro livro) {
         this.livros.add(livro);
 
     }
-
     public void cadastrarUsuario(Usuario usuario) {
         this.usuarios.add(usuario);
     }
 
-
-
-
     public Emprestimo fazerEmprestimo(Livro livro, Usuario usuario) {
-
 
         if (livro.getStatus() != Status.DISPONIVEL) {
             throw new LivroIndisponivelException("{livro: " + livro.getTitulo() + "} {Id: " + livro.getId() + "} esta indisponivel");
