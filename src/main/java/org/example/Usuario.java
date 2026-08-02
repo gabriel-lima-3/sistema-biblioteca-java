@@ -75,14 +75,14 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", tipoDeUsuario=" + tipoDeUsuario +
-                ", idade=" + idade +
-                ", livros=" + livros +
-                '}';
+        return "Usuario: " +
+
+                " nome: " + nome +
+                " email: " + email +
+                " tipoDeUsuario: " + tipoDeUsuario +
+                " idade: " + idade +
+                " livros: " + livros
+                ;
     }
 
     public void emprestarLivro(Livro livro){

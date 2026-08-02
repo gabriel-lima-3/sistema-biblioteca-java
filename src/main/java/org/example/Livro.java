@@ -77,13 +77,13 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro{" +
-                "titulo='" + titulo + '\'' +
-                ", ano=" + ano +
-                ", autor='" + autor + '\'' +
-                ", genero=" + genero +
-                ", status=" + status +
-                '}';
+        return "Livro: " +
+                " titulo: " + titulo +
+                " ano: " + ano +
+                " autor: " + autor +
+                " genero: " + genero +
+                " status: " + status
+                ;
     }
 
 

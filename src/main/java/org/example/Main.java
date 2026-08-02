@@ -1,8 +1,12 @@
 package org.example;
 import org.example.Exceptions.BibliotecaException;
+import org.example.Exceptions.LivroIndisponivelException;
+import org.example.Exceptions.LivroNaoEncontradoException;
+import org.example.Exceptions.UsuarioNaoEncontradoException;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -60,22 +64,25 @@ public class Main {
                         System.out.println("Cadastre pelo menos um livro e um usuario");
                         break;
                     }
+
                     System.out.println("Livros disponiveis");
                     imprimirLivros(b1.getLivros());
-                    System.out.println("\n Digite o livro que quer escolher:\n ");
-                    int escolhaDeLivro = sc.nextInt();
-                    if(escolhaDeLivro<0 || escolhaDeLivro >= b1.getLivros().size()){
-                        System.out.println("Opcao invalida");
-                        break;
-                    }
+                    System.out.println("\n Digite o nome do livro que quer escolher:\n ");
+                    String livroTitulo = sc.nextLine();
+
+
                     System.out.println("Digite seu nome de usuario \n");
                     imprimirUsuarios(b1.getUsuarios());
-                    int escolhaDeUsuario = sc.nextInt();
-                    if (escolhaDeUsuario<0 || escolhaDeUsuario >= b1.getUsuarios().size()){
-                        System.out.println("Opcao invalida");
-                        break;
-                    }
-                    b1.fazerEmprestimo(b1.getLivros().get(escolhaDeLivro), b1.getUsuarios().get(escolhaDeUsuario));
+                    String usuarioNome = sc.nextLine();
+
+                    Livro livroEscolha = b1.buscarLivroPeloTitulo(livroTitulo)
+                            .orElseThrow(() -> new LivroNaoEncontradoException("Livro: " + livroTitulo + " nao encontrado"));
+
+                    Usuario usuarioEscolha = b1.buscarUsuarioPeloNome(usuarioNome)
+                                    .orElseThrow(()-> new UsuarioNaoEncontradoException("Usuario: " + usuarioNome +  " nao encontrado"));
+
+                    b1.fazerEmprestimo(livroEscolha, usuarioEscolha);
+
                     break;
                 case 4:
                     imprimirUsuarios(b1.getUsuarios());
@@ -96,9 +103,7 @@ public class Main {
             } catch (BibliotecaException e) {
                 System.out.println(e.getMessage());
             }
-            catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-            }
+
 
 
         }while(escolha!=6);
@@ -135,4 +140,8 @@ public class Main {
             contador++;
         }
     }
+
+
+
+
 }

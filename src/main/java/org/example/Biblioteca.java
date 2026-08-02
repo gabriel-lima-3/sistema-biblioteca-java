@@ -3,6 +3,8 @@ import org.example.Exceptions.LivroIndisponivelException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class Biblioteca {
 
@@ -43,6 +45,22 @@ public class Biblioteca {
         return emprestimo;
 
     }
+
+    public Optional<Livro> buscarLivroPeloId(UUID id) {
+
+        return livros.stream()
+                .filter(livro -> livro.getId().equals(id)).findFirst();
+    }
+    public Optional<Livro> buscarLivroPeloTitulo(String titulo){
+
+        return livros.stream()
+                .filter(livro -> livro.getTitulo().equalsIgnoreCase(titulo)).findFirst();
+    }
+    public Optional<Usuario> buscarUsuarioPeloNome(String nome){
+        return usuarios.stream()
+                .filter(usuario -> usuario.getNome().equalsIgnoreCase(nome)).findFirst();
+    }
+
 }
 
 
